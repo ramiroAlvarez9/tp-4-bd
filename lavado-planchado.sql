@@ -63,6 +63,7 @@ SELECT DISTINCT codlavarropas, marca FROM plancha JOIN turno ON plancha.codplanc
 /*
     (c) Obtener la (idsucursal, cantidad) de lavarropas por sucursal.
 */
+
 SELECT idsucursal, COUNT (marca) AS cant_lavarropas_sucursal FROM lavarropas GROUP BY idsucursal;
 
 
@@ -73,8 +74,6 @@ SELECT idsucursal, COUNT (marca) AS cant_lavarropas_sucursal FROM lavarropas GRO
     Obtener el promedio de horas trabajadas por empleado, de aquellos empleados que
     trabajan en sucursales que tienen lavarropas con capacidad de más de 20 kg y cuyo
     promedio de horas trabajadas sea mayor a 5.
-
-
     pi nombre, promedio_horas ( SELECT trabajan > 5hs (empleados que trabajan en sucursales que tienen lavarropas con capacidad de más de 20 kg) )
         
 */
