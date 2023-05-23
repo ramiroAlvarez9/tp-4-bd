@@ -59,8 +59,7 @@ CREATE TABLE prestamo (
 	PRIMARY KEY(cod_ejemplar,cod_socio),
 	CONSTRAINT fk_cod_ejemplar FOREIGN KEY (cod_ejemplar)
 	REFERENCES ejemplar(cod_ejemplar),
-	CONSTRAINT fk_cod_socio FOREIGN KEY (cod_socio)
-	REFERENCES socio(cod_socio)
+	CONSTRAINT fk_cod_socio FOREIGN KEY (cod_socio) REFERENCES socio(cod_socio)
 );
 
 INSERT INTO prestamo (cod_ejemplar, cod_socio, fecha_prestamo, fecha_devolucion)

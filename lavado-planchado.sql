@@ -28,23 +28,38 @@
     EXCEPT   
  SELECT DISTINCT codplancha, fabricante FROM plancha NATURAL JOIN sucursal NATURAL JOIN lavarropas WHERE origen = 'ESP'; 
  
- 
+  (a) Obtener todos los (cod_plancha, fabricante) de las planchas instaladas en sucursales
+    que NO tengan lavarropas ESPañoles
+
+
+
+
  */
+
 
 --a)
 
-SELECT DISTINCT codplancha, fabricante FROM plancha 
+SELECT DISTINCT codplancha, fabricante FROM plancha NATURAL JOIN lavarropas NATURAL JOIN sucursal
 
-    EXCEPT 
+    EXCEPT
 
-SELECT DISTINCT codplancha, fabricante FROM plancha NATURAL JOIN sucursal NATURAL JOIN lavarropas WHERE origen = 'ESP';
+SELECT DISTINCT codplancha,fabricante FROM plancha NATURAL JOIN lavarropas NATURAL JOIN sucursal WHERE origen = 'ESP';
+
+
+
+
+
+
+
+
 
 --b)
 /*
     (b) Obtener todos los (codlavarropas, marca) de los lavarropas fabricados en BRA o que
     en la sucursal donde está instalado trabaje el empleado “johnny”
 
-    SELECT codlavarropas, marca 
+
+      SELECT codlavarropas, marca 
     FROM lavarropas
     WHERE origen = 'BRA'
         UNION 
@@ -52,12 +67,16 @@ SELECT DISTINCT codplancha, fabricante FROM plancha NATURAL JOIN sucursal NATURA
     FROM lavarropas
     NATURAL JOIN sucursal NATURAL JOIN plancha NATURAL JOIN turno
     WHERE apodo ='Johnny';
+  
 
+    b) Obtener todos los (codlavarropas, marca) de los lavarropas fabricados en BRA o que
+    en la sucursal donde está instalado trabaje el empleado “johnny”
 */
 
-SELECT DISTINCT codlavarropas, marca FROM lavarropas WHERE origen = 'BRA'
-    UNION
-SELECT DISTINCT codlavarropas, marca FROM plancha JOIN turno ON plancha.codplancha = turno.plancha_id NATURAL JOIN lavarropas WHERE apodo = 'Johnny' ;
+    SELECT codlavarropas, marca FROM lavarropas WHERE origen = 'BRA' GROUP BY codlavaropas
+        UNION
+    SELECT codlavarropas,marca FROM lavarropas NATURAL JOIN plancha NATURAL JOIN turno WHERE origen = 'BRA' AND apodo = 'Johnny' GROUP BY codlavaropas;
+
 
 --c)
 /*
@@ -89,8 +108,7 @@ SELECT apodo, AVG(horas) AS promedio_horas_trabajo FROM plancha NATURAL JOIN tur
 /*  
     APODO EMPLEADOS QUE TRABAJARON CON ATMA Y ALGUNA MAS
         EXCEPT
-    APODO EMPLEADOS QUE TRABAJARON CON MARCAS DISTINTAS DE ATMA.
-
+    APODO EMPLEADOS QUE TRABAJARON CON MARCAS DISTINTAS DE ATMA
 */
 
 SELECT DISTINCT apodo FROM turno NATURAL JOIN plancha WHERE fabricante = 'ATMA'
